@@ -1,0 +1,125 @@
+﻿@model ClientsViewModel?
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+<div class="container-content">
+    <div class="content-block">
+        <div class="x-div-load-file-form">
+            <partial name="_ClientsForm" />
+        </div>
+    </div>
+
+    <div class="content-block" id="RequestClientsTableResult">
+        <div class="text-prompt-block">
+            <p class="text font-family-1 black-text">Чтобы загрузить таблицу выберете файл exel</p>
+        </div>
+
+        <div class="result-clients-data-block">
+            <div id="ClientsTable" class="block-clients-table"></div>
+            <div id="ClientsPie" class="block-clients-chart"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+    $(function()
+    {
+        var clientsForm = $('#RequestClientsTableForm');
+        var resultDiv = $('#RequestClientsTableResult');
+        var clientsTable = $('#ClientsTable');
+        var clientsPie = $('#ClientsPie');
+
+        clientsForm
+            .on('click', '#InputFileButton', function() {
+                $('#InputFile').click();
+            });
+
+        clientsForm
+            .on('change', '#InputFile', function() {
+                var $this = $(this);
+                console.log('on change input file');
+                if($this.val()) {
+                    clientsForm.submit();
+                }
+            });
+
+        var lastResponse;
+
+        clientsForm
+            .ajaxForm({
+                success: function(response) {
+                    console.log('get form response: ', response);
+                    if(response) {
+                        console.log('run render')
+                        lastResponse = response;
+                        Render(response);
+                    }
+                }
+            });
+
+        function Render(data)
+        {
+            RenderTable(data.clients);
+            RenderPie(data.genderSeries);
+        }
+
+        function RenderTable(clients)
+        {
+            console.log('RenderTable: ', clients)
+            var table = '<table class="clients-table"><thead class="clients-table-thead"><tr class="clients-table-head-row">'
+               + '<th class="clients-table-head-cell text-center"><span class="large-text font-family-1 white-text">Имя</span></th>'
+               + '<th class="clients-table-head-cell text-center"><span class="large-text font-family-1 white-text">Город</span></th>'
+               + '<th class="clients-table-head-cell text-center"><span class="large-text font-family-1 white-text">Пол</span></th>'
+               + '<th class="clients-table-head-cell text-center"><span class="large-text font-family-1 white-text">Возраст</span></th>'
+               + '</tr></thead><tbody>';
+            clients.forEach(function(c) {
+                table += '<tr class="clients-table-body-row">'
+                    + '<td class="clients-table-body-cell"><span class="text font-family-1 black-text">' + escape(c.name) + '</span></td>'
+                    + '<td class="clients-table-body-cell"><span class="text font-family-1 black-text">' + escape(c.residence) + '</span></td>'
+                    + '<td class="clients-table-body-cell"><span class="text font-family-1 black-text">' + escape(c.gender) + '</span></td>'
+                    + '<td class="clients-table-body-cell"><span class="text font-family-1 black-text">' + c.age + '</span></td>'
+                    + '</tr>';
+            });
+            table += '</tbody></table>';
+            clientsTable.html(table);
+        }
+
+        function RenderPie(genderSeries) {
+            var points = genderSeries.map(function(x) {
+                return { y: x.percents, label: x.gender, gender: x.gender };
+            });
+            var chart = new CanvasJS.Chart("ClientsPie", {
+                animationEnabled: true,
+                title: {
+                    text: "Пол"
+                },
+
+                data: [{
+                    type: "pie",
+                    startAngle: 240,
+                    yValueFormatString: "##0.00\"%\"",
+                    indexLabel: "{label} {y}",
+                    click: function(e){
+                        console.log('clicked pie, label:', e.dataPoint.label, "x:", e.dataPoint.x, "y: "+ e.dataPoint.y);
+                        var filtered = lastResponse.clients.filter(x => x.gender == e.dataPoint.label);
+                        RenderTable(filtered);
+                    },
+                    dataPoints: points
+                }]
+            });
+            chart.render();
+        }
+
+        function escape(text) {
+            'use strict';
+            return text.replace(/[\"&<>]/g, function (a) {
+                return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;' }[a];
+            });
+        }
+    });
+</script>
+}

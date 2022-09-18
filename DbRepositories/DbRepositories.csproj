@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DbContextEntities\DbContextEntities.csproj" />
+    <ProjectReference Include="..\EntityToDataMappers\EntityToDataMappers.csproj" />
+    <ProjectReference Include="..\RepositoryInterfaces\RepositoryInterfaces.csproj" />
+    <ProjectReference Include="..\SberbankDbContext\SberbankDbContext.csproj" />
+  </ItemGroup>
+
+</Project>

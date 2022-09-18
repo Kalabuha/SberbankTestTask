@@ -1,0 +1,14 @@
+﻿@model ClientsFileModel
+
+<form id="RequestClientsTableForm" class="load-file-form" 
+    asp-action="UploadTable" 
+    asp-controller="Clients" method="post" enctype="multipart/form-data">
+    <div class="form-block">
+        <input asp-for="File" id="InputFile" class="input-file" type="file" 
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+            style="display: none;"/>
+        <button class="button button-submit" id="InputFileButton">
+            <span class="large-text font-family-1 white-text">Выбрать файл</span>
+        </button>
+    </div>
+</form>

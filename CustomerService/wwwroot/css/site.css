@@ -1,0 +1,119 @@
+/* Layout */
+.navbar {
+    background-color: rgb(150, 228, 139) !important;
+}
+
+.home-sberbank-logo {
+    max-width: 300px;
+    max-height: 50px;
+}
+
+.nav-item:hover {
+    border-radius: 10px;
+    background-color: rgb(78, 218, 23);
+}
+
+.nav-link {
+    font-size: 26px;
+}
+
+/* Content */
+.main {
+    padding-top: 40px;
+}
+
+.content-block:not(:last-child) {
+    margin-bottom: 40px;
+}
+
+.form-block:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.button {
+    border-radius: 16px;
+    border: 2px grey solid;
+    padding: 0 20px 4px 20px;
+}
+
+.button-submit {    
+    background-color: rgb(71, 162, 64);
+}
+
+.text-prompt-block {
+    margin-bottom: 10px;
+}
+
+.result-clients-data-block {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.block-clients-table {
+    flex: 1 0 600px;
+}
+
+.block-clients-chart {
+    flex: 1 0 auto;
+}
+
+.clients-table {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.clients-table-head-row {
+    background-color: rgb(98, 215, 89);
+    height: 50px;
+}
+
+.clients-table-body-row {
+    height: 40px;
+}
+
+.clients-table-body-row:nth-child(odd) {
+    background-color: rgb(174, 250, 177);
+}
+
+.clients-table-body-row:nth-child(even) {
+    background-color: rgb(222, 247, 223);
+}
+
+.clients-table-body-cell {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.circle {
+    width: 240px;
+    height: 240px;
+    border-radius: 120px;
+    background-color: blue;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+.text {
+    font-size: 18px;
+}
+
+.large-text {
+    font-size: 22px;
+}
+
+.big-text {
+    font-size: 36px;
+}
+
+.white-text {
+    color: white;
+}
+
+.black-text {
+    color: black;
+}
